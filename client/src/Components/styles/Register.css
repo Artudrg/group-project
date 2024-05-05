@@ -1,0 +1,11 @@
+*{
+    margin: 0 auto;
+}
+
+.register{
+    text-align: center;
+    margin-top: 100px;
+    border: 2px solid black;
+    width: 300px;
+    height: 250px;
+}
