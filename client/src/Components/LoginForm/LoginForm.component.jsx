@@ -39,7 +39,7 @@ const LoginForm = (props) => {
 
         client.login(data.email, data.password)
             .then((response) => {
-                navigate("/dashboard")
+                navigate("/Rooms")
             })
             .catch((error) => {
                 if (error.response) {

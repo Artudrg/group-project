@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const routes = require('./router/roomRouter');
 
 app.use(express.json())
 app.use(cookieParser())
@@ -13,8 +14,11 @@ configureDB();
 const {oAuthRouter} = require("./router/oauthRouter");
 app.use("/", oAuthRouter);
 
-const {subjectRouter} = require('../server/router/subjectRouter');
-app.use('/', subjectRouter);
+app.get('/', (req, res) => {
+    res.send('¡Servidor Express funcionando!');
+});
+
+app.use('/rooms', routes);
 
 app.listen(5000, () => {
     console.log("Exito: app escuchando en puerto 5000")
