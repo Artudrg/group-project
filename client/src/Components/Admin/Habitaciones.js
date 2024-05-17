@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios"; // Usamos axios para obtener datos de la API
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Habitaciones = () => {
     const [habitaciones, setHabitaciones] = useState([]);
+    const location = useLocation();
+    const userRole = location.state ? location.state.role : "";
 
     useEffect(() => {
         const fetchHabitaciones = async () => {
@@ -33,31 +35,33 @@ const Habitaciones = () => {
                         src="https://graphicdesigneye.com/images/hotel-logo-design-service.png"
                         alt="Logo"
                         width={"70px"}
-                        marginRight ={"20px"}
+                        marginright={"20px"}
                     ></img>
                     <h1>King Hotel</h1>
                 </div>
                 <div style={{ marginTop: "25px", textDecoration: "none" }}>
                     <Link
-                        to="/rooms"
+                        to="/"
                         style={{
                             marginRight: "10px",
                             textDecoration: "none",
                             color: "black",
                         }}
                     >
-                        Inicio
+                        Salir
                     </Link>
-                    <Link
-                        to="/dashboard"
-                        style={{
-                            marginRight: "10px",
-                            textDecoration: "none",
-                            color: "black",
-                        }}
-                    >
-                        Dashboard
-                    </Link>
+                    {userRole === "admin" && (
+                        <Link
+                            to="/dashboard"
+                            style={{
+                                marginRight: "10px",
+                                textDecoration: "none",
+                                color: "black",
+                            }}
+                        >
+                            Dashboard
+                        </Link>
+                    )}
                 </div>
             </nav>
 

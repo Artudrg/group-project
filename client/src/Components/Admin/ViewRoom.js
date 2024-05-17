@@ -4,15 +4,15 @@ import axios from 'axios';
 
 const ViewRoom = () => {
   const { id } = useParams();
-  const [room, setRoom] = useState(null);
+  const [habitaciones, setHabitaciones] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchRoom = async () => {
+    const fetchHabitacion = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/rooms/${id}`);
-        setRoom(response.data);
+        setHabitaciones(response.data);
         setLoading(false);
       } catch (error) {
         setError('Error al cargar la habitación');
@@ -20,23 +20,26 @@ const ViewRoom = () => {
       }
     };
 
-    fetchRoom();
+    fetchHabitacion();
   }, [id]);
 
-  const handleRelease = async () => {
-    if (room && room.reservedBy) {
-      try {
-        const updatedRoom = {
-          reservedBy: null
+  const handleReservation = async () => {
+    try {
+        const updatedHabitacion = {
+            reserved: true // Establecer el estado de reserva como true
         };
 
-        const response = await axios.put(`http://localhost:5000/rooms/${id}`, updatedRoom);
-        setRoom(response.data);
-      } catch (error) {
-        console.error('Error al liberar la habitación:', error);
-      }
+        const response = await axios.put(`http://localhost:5000/rooms/update/${id}`, updatedHabitacion);
+        setHabitaciones(response.data);
+
+        // Mostrar un mensaje en la consola indicando que la habitación ha sido reservada
+        console.log('La habitación ha sido reservada.');
+    } catch (error) {
+        console.error('Error al reservar la habitación:', error);
     }
-  };
+};
+
+  
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -54,8 +57,7 @@ const ViewRoom = () => {
           <h1>King Hotel</h1>
         </div>
         <div style={{marginTop: '25px', textDecoration: 'none'}}>
-          <Link to="/rooms" style={{ marginRight: '10px', textDecoration: 'none', color: 'black'}}>Inicio</Link>
-          <Link to="/add" style={{ marginRight: '10px', textDecoration: 'none', color: 'black'}}>Agregar habitación</Link>
+          <Link to="/rooms" style={{ marginright: '10px', textDecoration: 'none', color: 'black'}}>Inicio</Link>
         </div>
       </nav>
       <div style={{ 
@@ -66,7 +68,7 @@ const ViewRoom = () => {
       }}>
         {/* Imagen de la habitación */}
         <div style={{ flex: 1 }}>
-          <img src={room.imageUrl} alt={room.description} style={{ width: '100%', borderRadius: '10px' }} />
+          <img src={habitaciones.imageUrl} alt={habitaciones.description} style={{ width: '100%', borderRadius: '10px' }} />
         </div>
 
         {/* Información de la habitación */}
@@ -83,13 +85,13 @@ const ViewRoom = () => {
           maxWidth: '400px',
           maxHeight: '400px'
         }}>
-          <h2>Habitación {room.number}</h2>
-          <p>{room.description}</p>
-          <p>Piso: {room.floor}</p>
-          <p>Precio por Noche: ${room.pricePerNight.toFixed(2)}</p>
+          <h2>Habitación {habitaciones.number}</h2>
+          <p>{habitaciones.description}</p>
+          <p>Piso: {habitaciones.floor}</p>
+          <p>Precio por Noche: ${habitaciones.pricePerNight.toFixed(2)}</p>
           <button style={{ 
             textDecoration: 'none',                    
-            backgroundColor: '#007bff',
+            backgroundColor: habitaciones.reserved ? 'red' : '#007bff',
             border: 'none',
             padding: '10px 20px',
             textAlign: 'center',
@@ -98,8 +100,10 @@ const ViewRoom = () => {
             borderRadius: '5px',
             color: 'white'
           }}
-          onClick={handleRelease} disabled={!room.reservedBy}>
-            {room.reservedBy ? 'Liberar Habitación' : 'Disponible'}
+          onClick={handleReservation}
+          disabled={habitaciones.reserved} 
+          >
+            {habitaciones.reserved ? 'Reservado' : 'Reservar'}
           </button>
         </div>
       </div>

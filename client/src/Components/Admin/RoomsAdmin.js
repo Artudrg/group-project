@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/rooms/${id}`); // Eliminar la habitación por ID
+            await axios.delete(`http://localhost:5000/rooms/delete/${id}`); // Eliminar la habitación por ID
             setHabitaciones(
                 habitaciones.filter((habitacion) => habitacion._id !== id)
             ); // Actualizar el estado
@@ -33,19 +33,29 @@ const Dashboard = () => {
             console.error("Error al eliminar la habitación:", error);
         }
     };
+
     const handleRelease = async (id) => {
-        try {
-            await axios.put(`http://localhost:8000/habitaciones/release/${id}`); // Ruta para liberar la habitación
-            setHabitaciones(habitaciones.map(habitacion => {
+    try {
+        const updatedHabitacion = {
+            reserved: null // Establecer el estado de reserva como null para liberar la habitación
+        };
+
+        // Realizar la solicitud PUT para actualizar la habitación
+        await axios.put(`http://localhost:5000/rooms/update/${id}`, updatedHabitacion);
+        
+        // Actualizar el estado de habitaciones con la habitación actualizada
+        setHabitaciones(prevHabitaciones => {
+            return prevHabitaciones.map(habitacion => {
                 if (habitacion._id === id) {
-                    return { ...habitacion, reservedBy: null }; // Cambiar reservedBy a null
+                    return { ...habitacion, reserved: null };
                 }
                 return habitacion;
-            }));
-        } catch (error) {
-            console.error('Error al liberar la habitación:', error);
-        }
-    };
+            });
+        });
+    } catch (error) {
+        console.error('Error al liberar la habitación:', error);
+    }
+};
 
     if (loading) {
         return <p>Cargando...</p>;
@@ -159,7 +169,7 @@ const Dashboard = () => {
                                 >
                                     Eliminar
                                 </button>
-                                {habitacion.reservedBy && ( // Mostrar botón solo si reservedBy no es null
+                                {habitacion.reserved && (
                                     <button
                                         style={{ backgroundColor: '#28a745', color: 'white', padding: '5px 10px', border: 'none', borderRadius: '5px', cursor: 'pointer', marginLeft: '10px' }}
                                         onClick={() => handleRelease(habitacion._id)}

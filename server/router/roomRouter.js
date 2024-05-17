@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-        const { number, floor, pricePerNight, imageUrl, description, createdBy } = req.body;
+        const { number, floor, pricePerNight, imageUrl, description } = req.body;
         const room = new Room({ number, floor, pricePerNight, imageUrl, description});
         await room.save();
         res.json(room);
@@ -37,13 +37,21 @@ router.get('/:id', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
     try {
-        const { number, floor, pricePerNight, imageUrl, description } = req.body;
-        const room = await Room.findByIdAndUpdate(req.params.id, { number, floor, pricePerNight, imageUrl, description }, { new: true });
+        const { number, floor, pricePerNight, imageUrl, description, reserved } = req.body;
+
+        // Verificar si reserved está definido en el cuerpo de la solicitud
+        const updatedFields = { number, floor, pricePerNight, imageUrl, description };
+        if (reserved !== undefined) {
+            updatedFields.reserved = reserved;
+        }
+
+        const room = await Room.findByIdAndUpdate(req.params.id, updatedFields, { new: true });
         res.json(room);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 router.delete('/delete/:id', async (req, res) => {
     try {

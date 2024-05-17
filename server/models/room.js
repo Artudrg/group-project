@@ -6,7 +6,7 @@ const roomSchema = new mongoose.Schema({
     pricePerNight: Number,
     imageUrl: String,
     description: String,
-    reservedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', sparse: true } 
+    reserved: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Room', roomSchema);

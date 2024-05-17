@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const routes = require('./router/roomRouter');
+const usersRouter = require('./router/usersRouter');
 
 app.use(express.json())
 app.use(cookieParser())
@@ -17,6 +18,8 @@ app.use("/", oAuthRouter);
 app.get('/', (req, res) => {
     res.send('¡Servidor Express funcionando!');
 });
+
+app.use('/users', usersRouter);
 
 app.use('/rooms', routes);
 
