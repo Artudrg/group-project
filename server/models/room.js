@@ -6,7 +6,7 @@ const roomSchema = new mongoose.Schema({
     pricePerNight: Number,
     imageUrl: String,
     description: String,
-    reservedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // Cambio de createdBy a reservedBy
+    reservedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', sparse: true } 
 });
 
 module.exports = mongoose.model('Room', roomSchema);

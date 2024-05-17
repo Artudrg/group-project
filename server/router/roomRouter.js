@@ -22,6 +22,19 @@ router.post('/add', async (req, res) => {
     }
 });
 
+// Obtener una habitación por ID
+router.get('/:id', async (req, res) => {
+    try {
+        const room = await Room.findById(req.params.id);
+        if (!room) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+        res.json(room);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 router.put('/update/:id', async (req, res) => {
     try {
         const { number, floor, pricePerNight, imageUrl, description } = req.body;
