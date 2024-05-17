@@ -67,11 +67,12 @@ const Dashboard = () => {
             >
                 <div style={{ display: "flex" }}>
                     <img
-                        src="https://www.informaticanosolopc.com/wp-content/uploads/Apple-movil-png.png"
+                        src="https://graphicdesigneye.com/images/hotel-logo-design-service.png"
                         alt="Logo"
                         width={"70px"}
+                        marginRight ={"20px"}
                     ></img>
-                    <h1>Hotel Awesome</h1>
+                    <h1>King Hotel</h1>
                 </div>
                 <div style={{ marginTop: "25px", textDecoration: "none" }}>
                     <Link

@@ -6,6 +6,7 @@ import Rooms from './Components/Admin/Habitaciones'
 import Dashboard from './Components/Admin/RoomsAdmin';
 import EditRoom from './Components/Admin/EditRoom';
 import NewRoom from './Components/Admin/NewRoom';
+import ViewRoom from './Components/Admin/ViewRoom';
 const PageRouter = (props) => {
     return (
         <BrowserRouter>
@@ -16,6 +17,7 @@ const PageRouter = (props) => {
                 <Route index={true} path='/dashboard' element={<Dashboard/>}/>
                 <Route index={true} path="/edit/:id" exact element={<EditRoom/>}/>
                 <Route index={true} path="/new" exact element={<NewRoom/>}/>
+                <Route index={true} path="/room/:id" exact element={<ViewRoom/>}/>
             </Routes>
         </BrowserRouter>
     );
