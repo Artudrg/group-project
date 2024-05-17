@@ -39,7 +39,7 @@ const Habitaciones = () => {
                 </div>
                 <div style={{ marginTop: "25px", textDecoration: "none" }}>
                     <Link
-                        to="/"
+                        to="/rooms"
                         style={{
                             marginRight: "10px",
                             textDecoration: "none",

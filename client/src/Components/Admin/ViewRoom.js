@@ -54,7 +54,7 @@ const ViewRoom = () => {
           <h1>King Hotel</h1>
         </div>
         <div style={{marginTop: '25px', textDecoration: 'none'}}>
-          <Link to="/" style={{ marginRight: '10px', textDecoration: 'none', color: 'black'}}>Nuestras habitaciones</Link>
+          <Link to="/rooms" style={{ marginRight: '10px', textDecoration: 'none', color: 'black'}}>Inicio</Link>
           <Link to="/add" style={{ marginRight: '10px', textDecoration: 'none', color: 'black'}}>Agregar habitación</Link>
         </div>
       </nav>
