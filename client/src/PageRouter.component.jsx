@@ -5,6 +5,7 @@ import RegisterPage from './Components/RegisterForm/RegisterForm.component';
 import Rooms from './Components/Admin/Habitaciones'
 import Dashboard from './Components/Admin/RoomsAdmin';
 import EditRoom from './Components/Admin/EditRoom';
+import NewRoom from './Components/Admin/NewRoom';
 const PageRouter = (props) => {
     return (
         <BrowserRouter>
@@ -13,7 +14,8 @@ const PageRouter = (props) => {
                 <Route index={true} path='/Register' element={<RegisterPage />} />
                 <Route index={true} path='/rooms' element={<Rooms/>}/>
                 <Route index={true} path='/dashboard' element={<Dashboard/>}/>
-                <Route index={true} path="/edit/:id" exact element={<EditRoom/>} />
+                <Route index={true} path="/edit/:id" exact element={<EditRoom/>}/>
+                <Route index={true} path="/new" exact element={<NewRoom/>}/>
             </Routes>
         </BrowserRouter>
     );
