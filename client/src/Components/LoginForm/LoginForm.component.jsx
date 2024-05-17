@@ -54,41 +54,41 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="login">
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <h1>Login</h1>
-                    <div>
-                        {errors.email && <small>{errors.email}</small>}
-                        <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email || ""}
-                            onChange={handleChange}
-                            placeholder="Correo"
-                            required={true}
-                        />
-                    </div>
-                    <div>
-                        {errors.password && <small>{errors.password}</small>}
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={data.password || ""}
-                            onChange={handleChange}
-                            required={true}
-                            placeholder="Contraseña"
-                            minLength={5}
-                        />
-                    </div>
-                    <div className="btn">
-                        <button type="submit">Login</button>
-                    </div>
-                    <div>
-                        <Link to={`/register`}>¿No tienes cuenta? Regístrate</Link>
-                    </div>
+        <div className="login-container">
+            <form onSubmit={handleSubmit} className="login-form">
+                <h1>Login</h1>
+                <div className="input-container">
+                    {errors.email && <small className="error-message">{errors.email}</small>}
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email || ""}
+                        onChange={handleChange}
+                        placeholder="Correo"
+                        required={true}
+                        className="input-field"
+                    />
+                </div>
+                <div className="input-container">
+                    {errors.password && <small className="error-message">{errors.password}</small>}
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password || ""}
+                        onChange={handleChange}
+                        required={true}
+                        placeholder="Contraseña"
+                        minLength={5}
+                        className="input-field"
+                    />
+                </div>
+                <div className="btn-container">
+                    <button type="submit" className="submit-btn">Login</button>
+                </div>
+                <div className="register-link">
+                    <Link to="/register">¿No tienes cuenta? Regístrate</Link>
                 </div>
             </form>
         </div>

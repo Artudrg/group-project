@@ -55,82 +55,85 @@ const RegisterForm = (props) => {
     };
 
     return (
-        <div className="register">
-            <h1>Crea tu Cuenta</h1>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        {errors.name && <small>{errors.name}</small>}
-                        <input
-                            id="name"
-                            type="name"
-                            name="name"
-                            value={data.name || ""}
-                            onChange={handleChange}
-                            placeholder="Nombre"
-                            required={true}
-                        />
-                    </div>
-                    <div>
-                        {errors.email && <small>{errors.email}</small>}
-                        <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email || ""}
-                            onChange={handleChange}
-                            placeholder="Correo"
-                            required={true}
-                        />
-                    </div>
-                    <div>
-                        {errors.password && <small>{errors.password}</small>}
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={data.password || ""}
-                            onChange={handleChange}
-                            placeholder="Contraseña"
-                            required={true}
-                            minLength={5}
-                        />
-                    </div>
-                    <div>
-                        {errors.password && <small>{errors.password}</small>}
-                        <input
-                            id="password2"
-                            type="password"
-                            name="password2"
-                            value={data.password2 || ""}
-                            onChange={handleChange}
-                            placeholder="Confirmar Contraseña"
-                            required={true}
-                            minLength={5}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="role">Rol:</label>
-                        <select
-                            id="role"
-                            name="role"
-                            value={data.role || ""}
-                            onChange={handleChange}
-                            required={true}
-                        >
-                            <option value="">Seleccione un rol</option>
-                            <option value="user">Usuario</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                    </div>
-                    <div className="btn">
-                        <button type="submit">Crear Cuenta</button>
-                    </div>
-                    <div>
-                        <Link to={`/`}>¿Ya tienes cuenta? Loguéate</Link>
-                    </div>
-                </form>
-            </div>
+        <div className="register-container">
+            <form onSubmit={handleSubmit} className="register-form">
+                <h1>Crea tu Cuenta</h1>
+                <div className="input-container">
+                    {errors.name && <small className="error-message">{errors.name}</small>}
+                    <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={data.name || ""}
+                        onChange={handleChange}
+                        placeholder="Nombre"
+                        required={true}
+                        className="input-field"
+                    />
+                </div>
+                <div className="input-container">
+                    {errors.email && <small className="error-message">{errors.email}</small>}
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email || ""}
+                        onChange={handleChange}
+                        placeholder="Correo"
+                        required={true}
+                        className="input-field"
+                    />
+                </div>
+                <div className="input-container">
+                    {errors.password && <small className="error-message">{errors.password}</small>}
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password || ""}
+                        onChange={handleChange}
+                        placeholder="Contraseña"
+                        required={true}
+                        minLength={5}
+                        className="input-field"
+                    />
+                </div>
+                <div className="input-container">
+                    {errors.password && <small className="error-message">{errors.password}</small>}
+                    <input
+                        id="password2"
+                        type="password"
+                        name="password2"
+                        value={data.password2 || ""}
+                        onChange={handleChange}
+                        placeholder="Confirmar Contraseña"
+                        required={true}
+                        minLength={5}
+                        className="input-field"
+                    />
+                </div>
+                <div className="input-container">
+                    <label htmlFor="role">Rol:</label>
+                    <select
+                        id="role"
+                        name="role"
+                        value={data.role || ""}
+                        onChange={handleChange}
+                        required={true}
+                        className="input-field"
+                    >
+                        <option value="">Seleccione un rol</option>
+                        <option value="user">Usuario</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                <div className="btn-container">
+                    <button type="submit" className="submit-btn">Crear Cuenta</button>
+                </div>
+                <div className="login-link">
+                    <Link to="/">¿Ya tienes cuenta? Loguéate</Link>
+                </div>
+            </form>
         </div>
     );
 };
