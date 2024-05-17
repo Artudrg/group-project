@@ -57,7 +57,7 @@ const RegisterForm = (props) => {
     return (
         <div className="register-container">
             <form onSubmit={handleSubmit} className="register-form">
-                <h1>Crea tu Cuenta</h1>
+                <h1>Crea tu cuenta</h1>
                 <div className="input-container">
                     {errors.name && <small className="error-message">{errors.name}</small>}
                     <input

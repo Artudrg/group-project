@@ -56,7 +56,7 @@ const LoginForm = () => {
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
-                <h1>Login</h1>
+                <h1>Iniciar Sesión</h1>
                 <div className="input-container">
                     {errors.email && <small className="error-message">{errors.email}</small>}
                     <input
