@@ -99,7 +99,9 @@ const Habitaciones = () => {
                         >
                             Precio por noche:{" "}
                         </span>
-                        <span>${habitacion.pricePerNight.toFixed(2)}</span>
+                        <span>
+                            {habitacion.pricePerNight !== undefined ? `$${habitacion.pricePerNight.toFixed(2)}` : 'No disponible'}
+                        </span>
                         <br></br>
                         <button
                             style={{

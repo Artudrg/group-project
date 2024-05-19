@@ -13,14 +13,15 @@ router.get('/', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-        const { number, floor, pricePerNight, imageUrl, description } = req.body;
-        const room = new Room({ number, floor, pricePerNight, imageUrl, description});
+        const { number, floor, pricePerNight = 0, imageUrl, description } = req.body;
+        const room = new Room({ number, floor, pricePerNight, imageUrl, description });
         await room.save();
         res.json(room);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // Obtener una habitación por ID
 router.get('/:id', async (req, res) => {
@@ -37,12 +38,17 @@ router.get('/:id', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
     try {
-        const { number, floor, pricePerNight, imageUrl, description, reserved } = req.body;
+        const { number, floor, pricePerNight, imageUrl, description, reserved, checkIn, checkOut } = req.body;
 
-        // Verificar si reserved está definido en el cuerpo de la solicitud
         const updatedFields = { number, floor, pricePerNight, imageUrl, description };
         if (reserved !== undefined) {
             updatedFields.reserved = reserved;
+        }
+        if (checkIn) {
+            updatedFields.checkIn = checkIn;
+        }
+        if (checkOut) {
+            updatedFields.checkOut = checkOut;
         }
 
         const room = await Room.findByIdAndUpdate(req.params.id, updatedFields, { new: true });

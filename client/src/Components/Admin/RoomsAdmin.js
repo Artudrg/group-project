@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import '../styles/main.css'
+import '../styles/main.css';
 
 const Dashboard = () => {
     const [habitaciones, setHabitaciones] = useState([]);
@@ -35,27 +35,27 @@ const Dashboard = () => {
     };
 
     const handleRelease = async (id) => {
-    try {
-        const updatedHabitacion = {
-            reserved: null // Establecer el estado de reserva como null para liberar la habitación
-        };
+        try {
+            const updatedHabitacion = {
+                reserved: null // Establecer el estado de reserva como null para liberar la habitación
+            };
 
-        // Realizar la solicitud PUT para actualizar la habitación
-        await axios.put(`http://localhost:5000/rooms/update/${id}`, updatedHabitacion);
-        
-        // Actualizar el estado de habitaciones con la habitación actualizada
-        setHabitaciones(prevHabitaciones => {
-            return prevHabitaciones.map(habitacion => {
-                if (habitacion._id === id) {
-                    return { ...habitacion, reserved: null };
-                }
-                return habitacion;
+            // Realizar la solicitud PUT para actualizar la habitación
+            await axios.put(`http://localhost:5000/rooms/update/${id}`, updatedHabitacion);
+            
+            // Actualizar el estado de habitaciones con la habitación actualizada
+            setHabitaciones(prevHabitaciones => {
+                return prevHabitaciones.map(habitacion => {
+                    if (habitacion._id === id) {
+                        return { ...habitacion, reserved: null };
+                    }
+                    return habitacion;
+                });
             });
-        });
-    } catch (error) {
-        console.error('Error al liberar la habitación:', error);
-    }
-};
+        } catch (error) {
+            console.error('Error al liberar la habitación:', error);
+        }
+    };
 
     if (loading) {
         return <p>Cargando...</p>;
@@ -80,7 +80,7 @@ const Dashboard = () => {
                         src="https://graphicdesigneye.com/images/hotel-logo-design-service.png"
                         alt="Logo"
                         width={"70px"}
-                        marginRight ={"20px"}
+                        marginRight={"20px"}
                     ></img>
                     <h1>King Hotel</h1>
                 </div>
@@ -138,7 +138,9 @@ const Dashboard = () => {
                         <tr key={habitacion._id}>
                             <td>{habitacion.number}</td>
                             <td>{habitacion.floor}</td>
-                            <td>${habitacion.pricePerNight.toFixed(2)}</td>
+                            <td>
+                                {habitacion.pricePerNight !== undefined ? `$${habitacion.pricePerNight.toFixed(2)}` : 'No disponible'}
+                            </td>
                             <td>{habitacion.description}</td>
                             <td>
                                 <Link to={`/edit/${habitacion._id}`}>
