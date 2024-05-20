@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import '../styles/main.css';
+import "../styles/main.css";
 
 const Dashboard = () => {
     const [habitaciones, setHabitaciones] = useState([]);
@@ -11,7 +11,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchHabitaciones = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/rooms"); // Ruta para obtener todas las habitaciones
+                const response = await axios.get("http://localhost:5000/rooms");
                 setHabitaciones(response.data);
                 setLoading(false);
             } catch (error) {
@@ -20,15 +20,15 @@ const Dashboard = () => {
             }
         };
 
-        fetchHabitaciones(); // Llamar a la función para obtener las habitaciones
+        fetchHabitaciones();
     }, []);
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/rooms/delete/${id}`); // Eliminar la habitación por ID
-            setHabitaciones(
-                habitaciones.filter((habitacion) => habitacion._id !== id)
-            ); // Actualizar el estado
+            await axios.delete(`http://localhost:5000/rooms/delete/${id}`);
+            setHabitaciones((prevHabitaciones) =>
+                prevHabitaciones.filter((habitacion) => habitacion._id !== id)
+            );
         } catch (error) {
             console.error("Error al eliminar la habitación:", error);
         }
@@ -37,23 +37,22 @@ const Dashboard = () => {
     const handleRelease = async (id) => {
         try {
             const updatedHabitacion = {
-                reserved: null // Establecer el estado de reserva como null para liberar la habitación
+                reserved: null,
             };
-
-            // Realizar la solicitud PUT para actualizar la habitación
-            await axios.put(`http://localhost:5000/rooms/update/${id}`, updatedHabitacion);
-            
-            // Actualizar el estado de habitaciones con la habitación actualizada
-            setHabitaciones(prevHabitaciones => {
-                return prevHabitaciones.map(habitacion => {
+            await axios.put(
+                `http://localhost:5000/rooms/update/${id}`,
+                updatedHabitacion
+            );
+            setHabitaciones((prevHabitaciones) =>
+                prevHabitaciones.map((habitacion) => {
                     if (habitacion._id === id) {
                         return { ...habitacion, reserved: null };
                     }
                     return habitacion;
-                });
-            });
+                })
+            );
         } catch (error) {
-            console.error('Error al liberar la habitación:', error);
+            console.error("Error al liberar la habitación:", error);
         }
     };
 
@@ -130,6 +129,8 @@ const Dashboard = () => {
                         <th>Piso</th>
                         <th>Precio por Noche</th>
                         <th>Descripción</th>
+                        <th>Fecha de Entrada</th>
+                        <th>Fecha de Salida</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -139,9 +140,21 @@ const Dashboard = () => {
                             <td>{habitacion.number}</td>
                             <td>{habitacion.floor}</td>
                             <td>
-                                {habitacion.pricePerNight !== undefined ? `$${habitacion.pricePerNight.toFixed(2)}` : 'No disponible'}
+                                {habitacion.pricePerNight !== undefined
+                                    ? `$${habitacion.pricePerNight.toFixed(2)}`
+                                    : "No disponible"}
                             </td>
                             <td>{habitacion.description}</td>
+                            <td>
+                                {habitacion.reserved
+                                    ? new Date(habitacion.checkIn).toLocaleDateString('es-ES')
+                                    : "No reservado"}
+                            </td>
+                            <td>
+                                {habitacion.reserved
+                                    ? new Date(habitacion.checkOut).toLocaleDateString('es-ES')
+                                    : "No reservado"}
+                            </td>
                             <td>
                                 <Link to={`/edit/${habitacion._id}`}>
                                     <button
@@ -173,7 +186,15 @@ const Dashboard = () => {
                                 </button>
                                 {habitacion.reserved && (
                                     <button
-                                        style={{ backgroundColor: '#28a745', color: 'white', padding: '5px 10px', border: 'none', borderRadius: '5px', cursor: 'pointer', marginLeft: '10px' }}
+                                        style={{
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "5px 10px",
+                                            border: "none",
+                                            borderRadius: "5px",
+                                            cursor: "pointer",
+                                            marginLeft: "10px",
+                                        }}
                                         onClick={() => handleRelease(habitacion._id)}
                                     >
                                         Liberar
